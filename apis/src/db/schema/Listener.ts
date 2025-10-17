@@ -11,6 +11,16 @@ export const quoterLowLevelError = table("quoter_low_level_error", {
   data: db.bytes('data'),
 })
 
+export const transferV310 = table("transfer_v3_1_0", {
+  fromAddress: db.address('from_address'),
+  toAddress: db.address('to_address'),
+  token: db.address('token'),
+  value: db.uint256('value'),
+  txHash: db.bytes32('tx_hash'),
+  blockNumber: db.uint256('block_number'),
+  blockTimestamp: db.uint256('block_timestamp'),
+})
+
 export const transferV400 = table("transfer_v4_0_0", {
   fromAddress: db.address('from_address'),
   toAddress: db.address('to_address'),
