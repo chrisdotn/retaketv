@@ -15,6 +15,10 @@ struct ClankerTokenV3_1$DomainSeparatorFunctionOutputs {
     bytes32 outArg0;
 }
 
+struct ClankerTokenV3_1$AdminFunctionOutputs {
+    address outArg0;
+}
+
 struct ClankerTokenV3_1$AllowanceFunctionInputs {
     address owner;
     address spender;
@@ -50,10 +54,6 @@ struct ClankerTokenV3_1$BurnFromFunctionInputs {
     uint256 value;
 }
 
-struct ClankerTokenV3_1$CastHashFunctionOutputs {
-    string outArg0;
-}
-
 struct ClankerTokenV3_1$CheckpointsFunctionInputs {
     address account;
     uint32 pos;
@@ -70,6 +70,10 @@ struct ClankerTokenV3_1$CheckpointsFunctionOutputs {
 
 struct ClankerTokenV3_1$ClockFunctionOutputs {
     uint48 outArg0;
+}
+
+struct ClankerTokenV3_1$ContextFunctionOutputs {
+    string outArg0;
 }
 
 struct ClankerTokenV3_1$CrosschainBurnFunctionInputs {
@@ -107,10 +111,6 @@ struct ClankerTokenV3_1$DelegatesFunctionOutputs {
     address outArg0;
 }
 
-struct ClankerTokenV3_1$DeployerFunctionOutputs {
-    address outArg0;
-}
-
 struct ClankerTokenV3_1$Eip712DomainFunctionOutputs {
     bytes1 fields;
     string name;
@@ -119,10 +119,6 @@ struct ClankerTokenV3_1$Eip712DomainFunctionOutputs {
     address verifyingContract;
     bytes32 salt;
     uint256[] extensions;
-}
-
-struct ClankerTokenV3_1$FidFunctionOutputs {
-    uint256 outArg0;
 }
 
 struct ClankerTokenV3_1$GetPastTotalSupplyFunctionInputs {
@@ -150,7 +146,15 @@ struct ClankerTokenV3_1$GetVotesFunctionOutputs {
     uint256 outArg0;
 }
 
-struct ClankerTokenV3_1$ImageFunctionOutputs {
+struct ClankerTokenV3_1$ImageUrlFunctionOutputs {
+    string outArg0;
+}
+
+struct ClankerTokenV3_1$IsVerifiedFunctionOutputs {
+    bool outArg0;
+}
+
+struct ClankerTokenV3_1$MetadataFunctionOutputs {
     string outArg0;
 }
 
@@ -223,6 +227,10 @@ struct ClankerTokenV3_1$UpdateImageFunctionInputs {
     string image_;
 }
 
+struct ClankerTokenV3_1$UpdateMetadataFunctionInputs {
+    string metadata_;
+}
+
 struct ClankerTokenV3_1$ApprovalEventParams {
     address owner;
     address spender;
@@ -257,6 +265,19 @@ struct ClankerTokenV3_1$TransferEventParams {
     address from;
     address to;
     uint256 value;
+}
+
+struct ClankerTokenV3_1$UpdateImageEventParams {
+    string image;
+}
+
+struct ClankerTokenV3_1$UpdateMetadataEventParams {
+    string metadata;
+}
+
+struct ClankerTokenV3_1$VerifiedEventParams {
+    address admin;
+    address token;
 }
 
 abstract contract ClankerTokenV3_1$OnApprovalEvent {
@@ -357,6 +378,48 @@ abstract contract ClankerTokenV3_1$OnTransferEvent {
     }
 }
 
+abstract contract ClankerTokenV3_1$OnUpdateImageEvent {
+    function onUpdateImageEvent(EventContext memory ctx, ClankerTokenV3_1$UpdateImageEventParams memory inputs) virtual external;
+
+    function triggerOnUpdateImageEvent() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes32(0xa27234ca678ebcb3cd33e8325c5563cd8d9ff626cc44a58b6ea2bf4b55524216),
+            triggerType: TriggerType.EVENT,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.onUpdateImageEvent.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$OnUpdateMetadataEvent {
+    function onUpdateMetadataEvent(EventContext memory ctx, ClankerTokenV3_1$UpdateMetadataEventParams memory inputs) virtual external;
+
+    function triggerOnUpdateMetadataEvent() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes32(0xf26c33166d6eefdac067b052550e7713b98ff0ffc4abb3caf719a1de36b651f4),
+            triggerType: TriggerType.EVENT,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.onUpdateMetadataEvent.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$OnVerifiedEvent {
+    function onVerifiedEvent(EventContext memory ctx, ClankerTokenV3_1$VerifiedEventParams memory inputs) virtual external;
+
+    function triggerOnVerifiedEvent() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes32(0x78a953f3f0d92abc078a34e5d4fedf8708e788e1b29300b3d6170e97f88a13fc),
+            triggerType: TriggerType.EVENT,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.onVerifiedEvent.selector
+        });
+    }
+}
+
 abstract contract ClankerTokenV3_1$OnClockModeFunction {
     function onClockModeFunction(FunctionContext memory ctx, ClankerTokenV3_1$ClockModeFunctionOutputs memory outputs) virtual external;
 
@@ -409,6 +472,34 @@ abstract contract ClankerTokenV3_1$PreDomainSeparatorFunction {
             triggerType: TriggerType.PRE_FUNCTION,
             listenerCodehash: address(this).codehash,
             handlerSelector: this.preDomainSeparatorFunction.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$OnAdminFunction {
+    function onAdminFunction(FunctionContext memory ctx, ClankerTokenV3_1$AdminFunctionOutputs memory outputs) virtual external;
+
+    function triggerOnAdminFunction() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes4(0xf851a440),
+            triggerType: TriggerType.FUNCTION,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.onAdminFunction.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$PreAdminFunction {
+    function preAdminFunction(PreFunctionContext memory ctx) virtual external;
+
+    function triggerPreAdminFunction() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes4(0xf851a440),
+            triggerType: TriggerType.PRE_FUNCTION,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.preAdminFunction.selector
         });
     }
 }
@@ -553,34 +644,6 @@ abstract contract ClankerTokenV3_1$PreBurnFromFunction {
     }
 }
 
-abstract contract ClankerTokenV3_1$OnCastHashFunction {
-    function onCastHashFunction(FunctionContext memory ctx, ClankerTokenV3_1$CastHashFunctionOutputs memory outputs) virtual external;
-
-    function triggerOnCastHashFunction() view external returns (Trigger memory) {
-        return Trigger({
-            abiName: "ClankerTokenV3_1",
-            selector: bytes4(0xa4dac281),
-            triggerType: TriggerType.FUNCTION,
-            listenerCodehash: address(this).codehash,
-            handlerSelector: this.onCastHashFunction.selector
-        });
-    }
-}
-
-abstract contract ClankerTokenV3_1$PreCastHashFunction {
-    function preCastHashFunction(PreFunctionContext memory ctx) virtual external;
-
-    function triggerPreCastHashFunction() view external returns (Trigger memory) {
-        return Trigger({
-            abiName: "ClankerTokenV3_1",
-            selector: bytes4(0xa4dac281),
-            triggerType: TriggerType.PRE_FUNCTION,
-            listenerCodehash: address(this).codehash,
-            handlerSelector: this.preCastHashFunction.selector
-        });
-    }
-}
-
 abstract contract ClankerTokenV3_1$OnCheckpointsFunction {
     function onCheckpointsFunction(FunctionContext memory ctx, ClankerTokenV3_1$CheckpointsFunctionInputs memory inputs, ClankerTokenV3_1$CheckpointsFunctionOutputs memory outputs) virtual external;
 
@@ -633,6 +696,34 @@ abstract contract ClankerTokenV3_1$PreClockFunction {
             triggerType: TriggerType.PRE_FUNCTION,
             listenerCodehash: address(this).codehash,
             handlerSelector: this.preClockFunction.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$OnContextFunction {
+    function onContextFunction(FunctionContext memory ctx, ClankerTokenV3_1$ContextFunctionOutputs memory outputs) virtual external;
+
+    function triggerOnContextFunction() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes4(0xd0496d6a),
+            triggerType: TriggerType.FUNCTION,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.onContextFunction.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$PreContextFunction {
+    function preContextFunction(PreFunctionContext memory ctx) virtual external;
+
+    function triggerPreContextFunction() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes4(0xd0496d6a),
+            triggerType: TriggerType.PRE_FUNCTION,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.preContextFunction.selector
         });
     }
 }
@@ -805,34 +896,6 @@ abstract contract ClankerTokenV3_1$PreDelegatesFunction {
     }
 }
 
-abstract contract ClankerTokenV3_1$OnDeployerFunction {
-    function onDeployerFunction(FunctionContext memory ctx, ClankerTokenV3_1$DeployerFunctionOutputs memory outputs) virtual external;
-
-    function triggerOnDeployerFunction() view external returns (Trigger memory) {
-        return Trigger({
-            abiName: "ClankerTokenV3_1",
-            selector: bytes4(0xd5f39488),
-            triggerType: TriggerType.FUNCTION,
-            listenerCodehash: address(this).codehash,
-            handlerSelector: this.onDeployerFunction.selector
-        });
-    }
-}
-
-abstract contract ClankerTokenV3_1$PreDeployerFunction {
-    function preDeployerFunction(PreFunctionContext memory ctx) virtual external;
-
-    function triggerPreDeployerFunction() view external returns (Trigger memory) {
-        return Trigger({
-            abiName: "ClankerTokenV3_1",
-            selector: bytes4(0xd5f39488),
-            triggerType: TriggerType.PRE_FUNCTION,
-            listenerCodehash: address(this).codehash,
-            handlerSelector: this.preDeployerFunction.selector
-        });
-    }
-}
-
 abstract contract ClankerTokenV3_1$OnEip712DomainFunction {
     function onEip712DomainFunction(FunctionContext memory ctx, ClankerTokenV3_1$Eip712DomainFunctionOutputs memory outputs) virtual external;
 
@@ -857,34 +920,6 @@ abstract contract ClankerTokenV3_1$PreEip712DomainFunction {
             triggerType: TriggerType.PRE_FUNCTION,
             listenerCodehash: address(this).codehash,
             handlerSelector: this.preEip712DomainFunction.selector
-        });
-    }
-}
-
-abstract contract ClankerTokenV3_1$OnFidFunction {
-    function onFidFunction(FunctionContext memory ctx, ClankerTokenV3_1$FidFunctionOutputs memory outputs) virtual external;
-
-    function triggerOnFidFunction() view external returns (Trigger memory) {
-        return Trigger({
-            abiName: "ClankerTokenV3_1",
-            selector: bytes4(0x3257b4f3),
-            triggerType: TriggerType.FUNCTION,
-            listenerCodehash: address(this).codehash,
-            handlerSelector: this.onFidFunction.selector
-        });
-    }
-}
-
-abstract contract ClankerTokenV3_1$PreFidFunction {
-    function preFidFunction(PreFunctionContext memory ctx) virtual external;
-
-    function triggerPreFidFunction() view external returns (Trigger memory) {
-        return Trigger({
-            abiName: "ClankerTokenV3_1",
-            selector: bytes4(0x3257b4f3),
-            triggerType: TriggerType.PRE_FUNCTION,
-            listenerCodehash: address(this).codehash,
-            handlerSelector: this.preFidFunction.selector
         });
     }
 }
@@ -973,30 +1008,86 @@ abstract contract ClankerTokenV3_1$PreGetVotesFunction {
     }
 }
 
-abstract contract ClankerTokenV3_1$OnImageFunction {
-    function onImageFunction(FunctionContext memory ctx, ClankerTokenV3_1$ImageFunctionOutputs memory outputs) virtual external;
+abstract contract ClankerTokenV3_1$OnImageUrlFunction {
+    function onImageUrlFunction(FunctionContext memory ctx, ClankerTokenV3_1$ImageUrlFunctionOutputs memory outputs) virtual external;
 
-    function triggerOnImageFunction() view external returns (Trigger memory) {
+    function triggerOnImageUrlFunction() view external returns (Trigger memory) {
         return Trigger({
             abiName: "ClankerTokenV3_1",
-            selector: bytes4(0xf3ccaac0),
+            selector: bytes4(0xaba83150),
             triggerType: TriggerType.FUNCTION,
             listenerCodehash: address(this).codehash,
-            handlerSelector: this.onImageFunction.selector
+            handlerSelector: this.onImageUrlFunction.selector
         });
     }
 }
 
-abstract contract ClankerTokenV3_1$PreImageFunction {
-    function preImageFunction(PreFunctionContext memory ctx) virtual external;
+abstract contract ClankerTokenV3_1$PreImageUrlFunction {
+    function preImageUrlFunction(PreFunctionContext memory ctx) virtual external;
 
-    function triggerPreImageFunction() view external returns (Trigger memory) {
+    function triggerPreImageUrlFunction() view external returns (Trigger memory) {
         return Trigger({
             abiName: "ClankerTokenV3_1",
-            selector: bytes4(0xf3ccaac0),
+            selector: bytes4(0xaba83150),
             triggerType: TriggerType.PRE_FUNCTION,
             listenerCodehash: address(this).codehash,
-            handlerSelector: this.preImageFunction.selector
+            handlerSelector: this.preImageUrlFunction.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$OnIsVerifiedFunction {
+    function onIsVerifiedFunction(FunctionContext memory ctx, ClankerTokenV3_1$IsVerifiedFunctionOutputs memory outputs) virtual external;
+
+    function triggerOnIsVerifiedFunction() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes4(0x80007e83),
+            triggerType: TriggerType.FUNCTION,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.onIsVerifiedFunction.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$PreIsVerifiedFunction {
+    function preIsVerifiedFunction(PreFunctionContext memory ctx) virtual external;
+
+    function triggerPreIsVerifiedFunction() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes4(0x80007e83),
+            triggerType: TriggerType.PRE_FUNCTION,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.preIsVerifiedFunction.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$OnMetadataFunction {
+    function onMetadataFunction(FunctionContext memory ctx, ClankerTokenV3_1$MetadataFunctionOutputs memory outputs) virtual external;
+
+    function triggerOnMetadataFunction() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes4(0x392f37e9),
+            triggerType: TriggerType.FUNCTION,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.onMetadataFunction.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$PreMetadataFunction {
+    function preMetadataFunction(PreFunctionContext memory ctx) virtual external;
+
+    function triggerPreMetadataFunction() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes4(0x392f37e9),
+            triggerType: TriggerType.PRE_FUNCTION,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.preMetadataFunction.selector
         });
     }
 }
@@ -1281,6 +1372,62 @@ abstract contract ClankerTokenV3_1$PreUpdateImageFunction {
     }
 }
 
+abstract contract ClankerTokenV3_1$OnUpdateMetadataFunction {
+    function onUpdateMetadataFunction(FunctionContext memory ctx, ClankerTokenV3_1$UpdateMetadataFunctionInputs memory inputs) virtual external;
+
+    function triggerOnUpdateMetadataFunction() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes4(0x918b5be1),
+            triggerType: TriggerType.FUNCTION,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.onUpdateMetadataFunction.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$PreUpdateMetadataFunction {
+    function preUpdateMetadataFunction(PreFunctionContext memory ctx, ClankerTokenV3_1$UpdateMetadataFunctionInputs memory inputs) virtual external;
+
+    function triggerPreUpdateMetadataFunction() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes4(0x918b5be1),
+            triggerType: TriggerType.PRE_FUNCTION,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.preUpdateMetadataFunction.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$OnVerifyFunction {
+    function onVerifyFunction(FunctionContext memory ctx) virtual external;
+
+    function triggerOnVerifyFunction() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes4(0xfc735e99),
+            triggerType: TriggerType.FUNCTION,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.onVerifyFunction.selector
+        });
+    }
+}
+
+abstract contract ClankerTokenV3_1$PreVerifyFunction {
+    function preVerifyFunction(PreFunctionContext memory ctx) virtual external;
+
+    function triggerPreVerifyFunction() view external returns (Trigger memory) {
+        return Trigger({
+            abiName: "ClankerTokenV3_1",
+            selector: bytes4(0xfc735e99),
+            triggerType: TriggerType.PRE_FUNCTION,
+            listenerCodehash: address(this).codehash,
+            handlerSelector: this.preVerifyFunction.selector
+        });
+    }
+}
+
 
 struct ClankerTokenV3_1$EmitAllEvents$Approval {
   address owner;
@@ -1318,6 +1465,19 @@ struct ClankerTokenV3_1$EmitAllEvents$Transfer {
   uint256 value;
 }
 
+struct ClankerTokenV3_1$EmitAllEvents$UpdateImage {
+  string image;
+}
+
+struct ClankerTokenV3_1$EmitAllEvents$UpdateMetadata {
+  string metadata;
+}
+
+struct ClankerTokenV3_1$EmitAllEvents$Verified {
+  address admin;
+  address token;
+}
+
 contract ClankerTokenV3_1$EmitAllEvents is
   ClankerTokenV3_1$OnApprovalEvent,
 ClankerTokenV3_1$OnCrosschainBurnEvent,
@@ -1325,7 +1485,10 @@ ClankerTokenV3_1$OnCrosschainMintEvent,
 ClankerTokenV3_1$OnDelegateChangedEvent,
 ClankerTokenV3_1$OnDelegateVotesChangedEvent,
 ClankerTokenV3_1$OnEip712DomainChangedEvent,
-ClankerTokenV3_1$OnTransferEvent
+ClankerTokenV3_1$OnTransferEvent,
+ClankerTokenV3_1$OnUpdateImageEvent,
+ClankerTokenV3_1$OnUpdateMetadataEvent,
+ClankerTokenV3_1$OnVerifiedEvent
 {
   event Approval(ClankerTokenV3_1$EmitAllEvents$Approval);
   event CrosschainBurn(ClankerTokenV3_1$EmitAllEvents$CrosschainBurn);
@@ -1334,6 +1497,9 @@ ClankerTokenV3_1$OnTransferEvent
   event DelegateVotesChanged(ClankerTokenV3_1$EmitAllEvents$DelegateVotesChanged);
   event Eip712DomainChanged();
   event Transfer(ClankerTokenV3_1$EmitAllEvents$Transfer);
+  event UpdateImage(ClankerTokenV3_1$EmitAllEvents$UpdateImage);
+  event UpdateMetadata(ClankerTokenV3_1$EmitAllEvents$UpdateMetadata);
+  event Verified(ClankerTokenV3_1$EmitAllEvents$Verified);
 
   function onApprovalEvent(EventContext memory ctx, ClankerTokenV3_1$ApprovalEventParams memory inputs) virtual external override {
     emit Approval(ClankerTokenV3_1$EmitAllEvents$Approval(inputs.owner, inputs.spender, inputs.value));
@@ -1356,9 +1522,18 @@ function onEip712DomainChangedEvent(EventContext memory ctx) virtual external ov
 function onTransferEvent(EventContext memory ctx, ClankerTokenV3_1$TransferEventParams memory inputs) virtual external override {
     emit Transfer(ClankerTokenV3_1$EmitAllEvents$Transfer(inputs.from, inputs.to, inputs.value));
   }
+function onUpdateImageEvent(EventContext memory ctx, ClankerTokenV3_1$UpdateImageEventParams memory inputs) virtual external override {
+    emit UpdateImage(ClankerTokenV3_1$EmitAllEvents$UpdateImage(inputs.image));
+  }
+function onUpdateMetadataEvent(EventContext memory ctx, ClankerTokenV3_1$UpdateMetadataEventParams memory inputs) virtual external override {
+    emit UpdateMetadata(ClankerTokenV3_1$EmitAllEvents$UpdateMetadata(inputs.metadata));
+  }
+function onVerifiedEvent(EventContext memory ctx, ClankerTokenV3_1$VerifiedEventParams memory inputs) virtual external override {
+    emit Verified(ClankerTokenV3_1$EmitAllEvents$Verified(inputs.admin, inputs.token));
+  }
 
   function allTriggers() view external returns (Trigger[] memory) {
-    Trigger[] memory triggers = new Trigger[](7);
+    Trigger[] memory triggers = new Trigger[](10);
     triggers[0] = this.triggerOnApprovalEvent();
     triggers[1] = this.triggerOnCrosschainBurnEvent();
     triggers[2] = this.triggerOnCrosschainMintEvent();
@@ -1366,6 +1541,9 @@ function onTransferEvent(EventContext memory ctx, ClankerTokenV3_1$TransferEvent
     triggers[4] = this.triggerOnDelegateVotesChangedEvent();
     triggers[5] = this.triggerOnEip712DomainChangedEvent();
     triggers[6] = this.triggerOnTransferEvent();
+    triggers[7] = this.triggerOnUpdateImageEvent();
+    triggers[8] = this.triggerOnUpdateMetadataEvent();
+    triggers[9] = this.triggerOnVerifiedEvent();
     return triggers;
   }
 }
