@@ -6,6 +6,7 @@ import "sim-idx-generated/Generated.sol";
 
 // import "./ClankerV4_0_0Listener.sol";
 import "./ClankerTokenV4_0Listener.sol";
+import "./ClankerTokenV3_1Listener.sol";
 
 contract Triggers is BaseTriggers {
     // Clanker contract addresses on BASE
@@ -34,6 +35,13 @@ contract Triggers is BaseTriggers {
         addTrigger(
             chainAbi(Chains.Base.withStartBlock(CLANKER_V4_0_0_START_BLOCK), ClankerTokenV4_0$Abi()),
             clankerTokenV4Listener.triggerOnTransferEvent()
+        );
+
+        // ClankerToken V3.1 Transfer events on BASE
+        ClankerTokenV3_1Listener clankerTokenV3_1Listener = new ClankerTokenV3_1Listener();
+        addTrigger(
+            chainAbi(Chains.Base, ClankerTokenV3_1$Abi()),
+            clankerTokenV3_1Listener.triggerOnTransferEvent()
         );
     }
 }
