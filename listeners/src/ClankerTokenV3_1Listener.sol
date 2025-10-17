@@ -19,6 +19,7 @@ contract ClankerTokenV3_1Listener is ClankerTokenV3_1$OnTransferEvent {
         EventContext memory ctx,
         ClankerTokenV3_1$TransferEventParams memory inputs
     ) external override {
+
         emit TransferV3_1_0(
             inputs.from,
             inputs.to,
@@ -28,6 +29,7 @@ contract ClankerTokenV3_1Listener is ClankerTokenV3_1$OnTransferEvent {
             block.number,
             block.timestamp
         );
+        
     }
 }
 
