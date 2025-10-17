@@ -13,7 +13,8 @@ contract ClankerTokenV3_1Listener is ClankerTokenV3_1$OnTransferEvent {
         uint256 value,
         bytes32 txHash,
         uint256 blockNumber,
-        uint256 blockTimestamp
+        uint256 blockTimestamp,
+        string tokenContext
     );
 
     function containsStreammDeployment(
@@ -50,21 +51,18 @@ contract ClankerTokenV3_1Listener is ClankerTokenV3_1$OnTransferEvent {
         
         string memory tokenContext = IClankerTokenV4_0(ctx.txn.call.callee())
             .context();
-        
-        if (containsStreammDeployment(tokenContext)) {
-            emit TransferV3_1_0(
-                inputs.from,
-                inputs.to,
-                ctx.txn.call.callee(),
-                inputs.value,
-                ctx.txn.hash(),
-                block.number,
-                block.timestamp
-            );
-        }
 
-
-        
+        emit TransferV3_1_0(
+            inputs.from,
+            inputs.to,
+            ctx.txn.call.callee(),
+            inputs.value,
+            ctx.txn.hash(),
+            block.number,
+            block.timestamp,
+            tokenContext
+        );
+           
     }
 }
 

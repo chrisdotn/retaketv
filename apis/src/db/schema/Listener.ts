@@ -19,6 +19,7 @@ export const transferV310 = table("transfer_v3_1_0", {
   txHash: db.bytes32('tx_hash'),
   blockNumber: db.uint256('block_number'),
   blockTimestamp: db.uint256('block_timestamp'),
+  tokenContext: t.text('token_context'),
 })
 
 export const transferV400 = table("transfer_v4_0_0", {
